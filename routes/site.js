@@ -7,7 +7,7 @@ module.exports.index = (request, response) => response.send('OAuth 2.0 Server');
 
 module.exports.loginForm = (request, response) => response.render('login');
 
-module.exports.login = passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' });
+module.exports.login = passport.authenticate('local', { successReturnToOrRedirect: 'https://skills-store.amazon.com.br/external/link-result?success=true&languageCode=pt_BR&skillId=amzn1.ask.skill.b42b939f-0073-45ca-99b6-055fdab00aff&skillStage=development', failureRedirect: '/login' });
 
 module.exports.logout = (request, response) => {
   request.logout();
