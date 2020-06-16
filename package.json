@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "@poziworld/oauth2orize": "^1.11.1",
