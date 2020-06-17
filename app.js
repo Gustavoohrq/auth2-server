@@ -17,15 +17,15 @@ const token = require('./token');
 const user = require('./user');
 const cors = require('cors')
 
-
-console.log('Using MemoryStore for the data store');
-console.log('Using MemoryStore for the Session');
 const MemoryStore = expressSession.MemoryStore;
 
-// Express configuration
 const app = express();
 app.set('view engine', 'ejs');
 app.use(cookieParser());
+app.use(cors())
+
+const port = process.env.PORT || 8080
+
 
 // Session Configuration
 app.use(expressSession({
@@ -96,6 +96,6 @@ const options = {
   cert: fs.readFileSync(path.join(__dirname, 'certs/certificate.pem')),
 };
 
-app.listen(3000, function () {
-  console.log('Server OAuth2.0 is running PORT 8000')
-})
+app.listen(port, function () {
+  console.log(`Server running on the port ${port}`);
+});
