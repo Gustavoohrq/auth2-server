@@ -2,11 +2,11 @@
 
 const axios = require('axios')
 
-const username = "usernameApi";
-const password = "89372f0ddc5de5f99bcaf6b785535090"
+const usernameApi = "admin";
+const passwordApi = "89372f0ddc5de5f99bcaf6b785535090"
 
 const api = axios.create({
-    baseURL: 'https://gfa.unip.br/api/',
+    baseURL: 'https://api-function.lyceum.com.br/',
     auth: {
         username: usernameApi,
         password: passwordApi
