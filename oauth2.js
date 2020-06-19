@@ -32,7 +32,7 @@ const expiresIn = { expires_in : config.token.expiresIn };
  */
 server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
   const code = utils.createToken({ sub : user.id, exp : config.codeToken.expiresIn });
-  db.authorizationCodes.save(code, client.id, redirectURI, user.id, client.scope)
+  db.authorizationCodes.save(user, code, client.id, redirectURI, user.id, client.scope)
   .then(() => done(null, code))
   .catch(err => done(err));
 }));
@@ -48,7 +48,6 @@ server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
 server.grant(oauth2orize.grant.token((client, user, ares, done) => {
   const token      = utils.createToken({ sub : user.id, exp : config.token.expiresIn });
   const expiration = config.token.calculateExpirationDate();
-
   db.accessTokens.save(token, expiration, user.id, client.id, client.scope)
   .then(() => done(null, token, expiresIn))
   .catch(err => done(err));
@@ -63,9 +62,10 @@ server.grant(oauth2orize.grant.token((client, user, ares, done) => {
  * authorized the code.
  */
 server.exchange(oauth2orize.exchange.code((client, code, redirectURI, done) => {
+
   db.authorizationCodes.delete(code)
   .then(authCode => validate.authCode(code, authCode, client, redirectURI))
-  .then(authCode => validate.generateTokens(authCode))
+  .then(authCode =>validate.generateTokens(authCode))
   .then((tokens) => {
     if (tokens.length === 1) {
       return done(null, tokens[0], null, expiresIn);
@@ -86,8 +86,7 @@ server.exchange(oauth2orize.exchange.code((client, code, redirectURI, done) => {
  * application issues an access token on behalf of the user who authorized the code.
  */
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
-  db.users.findByUsername(username)
-  .then(user => validate.user(user, password))
+  db.users.findByUsername(username, password)
   .then(user => validate.generateTokens({ scope, userID: user.id, clientID: client.id }))
   .then((tokens) => {
     if (tokens === false) {

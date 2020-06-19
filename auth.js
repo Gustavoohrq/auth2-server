@@ -17,11 +17,6 @@ passport.use(new LocalStrategy(
   }
 ));
 
-passport.serializeUser((user, done) =>  done(null, user.id));
-
-passport.deserializeUser((id, done) => {
-  db.users.findById(id, (error, user) => done(error, user));
-});
 
 /**
  * BasicStrategy & ClientPasswordStrategy
@@ -69,7 +64,7 @@ passport.use(new ClientPasswordStrategy((clientId, clientSecret, done) => {
 passport.use(new BearerStrategy((accessToken, done) => {
   db.accessTokens.find(accessToken)
     .then(token => validate.token(token, accessToken))
-    .then(token => done(null, token, { scope: '*' }))
+    .then(token =>  done(null, token, { scope: '*' }))
     .catch(() => done(null, false));
 }));
 
@@ -86,12 +81,8 @@ passport.use(new BearerStrategy((accessToken, done) => {
 // simple matter of serializing the client's ID, and deserializing by finding
 // the client by ID from the database.
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+passport.serializeUser((user, done) =>  done(null, user.id));
 
 passport.deserializeUser((id, done) => {
-  db.users.find(id)
-    .then(user => done(null, user))
-    .catch(err => done(err));
+  db.users.findById(id, (error, user) => done(error, user));
 });

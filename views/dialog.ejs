@@ -19,16 +19,11 @@
     <!-- Upper box with Title, username, and password -->
     <div class="upper-box">
       <!-- Title -->
-      <div>
-        <div class="main-text">Decision</div>
-        <div class="subtext">Authorization Server</div>
-      </div>
       <div class="pure-control-group labels">
         <p>
 
-        <p><%= user.name %>,</p>
-        The application <b><%= client.name %></b> is requesting access to your account.
-        <p>Do you approve?</p>
+        <p><%= user.nomeAluno %>,</p>
+        O aplicativo está solicitando acesso à sua conta.
         </p>
       </div>
     </div>
@@ -36,19 +31,14 @@
     <div class="bottom-box">
       <div class="pure-controls accept-cancel-buttons">
         <div>
-          <input class="pure-button pure-button-primary" type="submit" value="Accept" id="allow">
+          <input class="pure-button pure-button-primary" type="submit" value="Aceitar" id="allow">
           <!-- Cheat to make a bit of spacing -->
           <span>&nbsp&nbsp</span>
-          <input class="pure-button" type="submit" value="Deny" name="cancel" id="deny">
+          <input class="pure-button" type="submit" value="Recusar" name="cancel" id="deny">
         </div>
       </div>
     </div>
   </fieldset>
-  <div class="from-text">
-    <a href="https://github.com/FrankHassanabad/Oauth2orizeRecipes">
-      From OAuth2OrizeRecipes
-    </a>
-  </div>
 </form>
 
 </body>

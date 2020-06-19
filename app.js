@@ -8,7 +8,6 @@ const db = require('./db');
 const express = require('express');
 const expressSession = require('express-session');
 const fs = require('fs');
-const https = require('https');
 const oauth2 = require('./oauth2');
 const passport = require('passport');
 const path = require('path');

@@ -37,9 +37,9 @@ exports.find = (token) => {
  * @param   {String}  scope       - The scope (optional)
  * @returns {Promise} resolved with the saved token
  */
-exports.save = (code, clientID, redirectURI, userID, scope) => {
+exports.save = (user ,code, clientID, redirectURI, userID, scope) => {
   const id = jwt.decode(code).jti;
-  codes[id] = { clientID, redirectURI, userID, scope };
+  codes[id] = { user, clientID, redirectURI, userID, scope };
   return Promise.resolve(codes[id]);
 };
 
@@ -65,6 +65,6 @@ exports.delete = (token) => {
  */
 exports.removeAll = () => {
   const deletedTokens = codes;
-  codes               = Object.create(null);
+  codes = Object.create(null);
   return Promise.resolve(deletedTokens);
 };

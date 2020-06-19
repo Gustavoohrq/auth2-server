@@ -2,25 +2,15 @@
 
 const api = require('../services/api')
 
-const users = [{
-  id: '1',
-  username: 'bob',
-  password: 'secret',
-  name: 'Bob Smith',
-}, {
-  id: '2',
-  username: 'joe',
-  password: 'password',
-  name: 'Joe Davis',
-}];
-
-
-module.exports.findById = (id, done) => {
-  console.log(id)
-  for (let i = 0, len = users.length; i < len; i++) {
-    if (users[i].id === id) return done(null, users[i]);
-  }
-  return done(new Error('User Not Found'));
+module.exports.findById = async (id, done) => {
+  await api.get(`aluno/obterInfo?env=unip&codPessoa=${id}`)
+    .then(function (response) {
+      const user = response.data
+      return done(null, user)
+    })
+    .catch(function (error) {
+      return done(new Error('User Not Found'))
+    })
 };
 
 
@@ -36,7 +26,6 @@ module.exports.findByUsername = async (username, password, done) => {
     'numero_ra': username,
     'password': password
   }
-  console.log(username, password)
   await api.post('/auth/login?env=unip', data)
     .then(function (response) {
       const user = response.data
