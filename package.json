@@ -1,13 +1,13 @@
 {
   "name": "oauth2orize-authorization-server",
   "version": "6.3.4",
-  "author": "Frank Hassanabad <frankhassanabad@gmail.com>",
-  "description": "OAuth2 security recipes and examples based on OAuth2orize",
+  "author": "Gustavo Henrique",
+  "description": "OAuth2.0 Server",
   "license": "MIT",
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FrankHassanabad/Oauth2orizeRecipes.git"
+    "url": "https://github.com/Gustavoohrq/auth2-server.git"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -19,6 +19,7 @@
     "express": "^4.10.x",
     "express-session": "^1.9.x",
     "jsonwebtoken": "^7.2.1",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
     "oauth2orize": "^1.0.x",
     "passport": "^0.3.x",
