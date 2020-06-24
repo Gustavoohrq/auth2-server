@@ -1,7 +1,7 @@
 Authorization Server
 ==================
 
-This is the authorization server example.
+Server OAuth2.0 .
 
 # Installation
 ```
