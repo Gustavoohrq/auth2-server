@@ -2,21 +2,9 @@
 
 const jwt = require('jsonwebtoken');
 
-// The authorization codes.
-// You will use these to get the access codes to get to the data in your endpoints as outlined
-// in the RFC The OAuth 2.0 Authorization Framework: Bearer Token Usage
-// (http://tools.ietf.org/html/rfc6750)
-
-/**
- * Authorization codes in-memory data structure which stores all of the authorization codes
- */
 let codes = Object.create(null);
 
-/**
- * Returns an authorization code if it finds one, otherwise returns null if one is not found.
- * @param   {String}  token - The token to decode to get the id of the authorization token to find.
- * @returns {Promise} resolved with the authorization code if found, otherwise undefined
- */
+
 exports.find = (token) => {
   try {
     const id = jwt.decode(token).jti;
@@ -37,7 +25,7 @@ exports.find = (token) => {
  * @param   {String}  scope       - The scope (optional)
  * @returns {Promise} resolved with the saved token
  */
-exports.save = (user ,code, clientID, redirectURI, userID, scope) => {
+exports.save = (user, code, clientID, redirectURI, userID, scope) => {
   const id = jwt.decode(code).jti;
   codes[id] = { user, clientID, redirectURI, userID, scope };
   return Promise.resolve(codes[id]);
@@ -59,10 +47,6 @@ exports.delete = (token) => {
   }
 };
 
-/**
- * Removes all authorization codes.
- * @returns {Promise} resolved with all removed authorization codes returned
- */
 exports.removeAll = () => {
   const deletedTokens = codes;
   codes = Object.create(null);

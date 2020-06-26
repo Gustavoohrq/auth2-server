@@ -39,7 +39,7 @@ exports.find = (token) => {
  */
 exports.save = (token, expirationDate, userID, clientID, scope, user) => {
   const id = jwt.decode(token).jti;
-  tokens[id] = { user, userID, expirationDate, clientID, scope, user };
+  tokens[id] = { user, userID, expirationDate, clientID, scope };
   return Promise.resolve(tokens[id]);
 };
 

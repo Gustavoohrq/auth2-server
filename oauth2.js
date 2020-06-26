@@ -184,8 +184,6 @@ exports.token = [
 server.serializeClient((client, done) => done(null, client.id));
 
 server.deserializeClient((id, done) => {
-  db.clients.find(id)
-    .then(client => done(null, client))
-    .catch(err => done(err));
+  db.clients.find(id, (error, client) => done(error, client));
 });
 
