@@ -23,12 +23,6 @@ const expiresIn = { expires_in: config.token.expiresIn };
 
 /**
  * Grant authorization codes
- *
- * The callback takes the `client` requesting authorization, the `redirectURI`
- * (which is used as a verifier in the subsequent exchange), the authenticated
- * `user` granting access, and their response, which contains approved scope,
- * duration, etc. as parsed by the application.  The application issues a code,
- * which is bound to these values, and will be exchanged for an access token.
  */
 server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
   const code = utils.createToken({ sub: user.id, exp: config.codeToken.expiresIn });
@@ -39,11 +33,6 @@ server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
 
 /**
  * Grant implicit authorization.
- *
- * The callback takes the `client` requesting authorization, the authenticated
- * `user` granting access, and their response, which contains approved scope,
- * duration, etc. as parsed by the application.  The application issues a token,
- * which is bound to these values.
  */
 server.grant(oauth2orize.grant.token((client, user, ares, done) => {
   const token = utils.createToken({ sub: user.id, exp: config.token.expiresIn });
@@ -55,11 +44,6 @@ server.grant(oauth2orize.grant.token((client, user, ares, done) => {
 
 /**
  * Exchange authorization codes for access tokens.
- *
- * The callback accepts the `client`, which is exchanging `code` and any
- * `redirectURI` from the authorization request for verification.  If these values
- * are validated, the application issues an access token on behalf of the user who
- * authorized the code.
  */
 server.exchange(oauth2orize.exchange.code((client, code, redirectURI, done) => {
 
@@ -80,10 +64,6 @@ server.exchange(oauth2orize.exchange.code((client, code, redirectURI, done) => {
 
 /**
  * Exchange user id and password for access tokens.
- *
- * The callback accepts the `client`, which is exchanging the user's name and password
- * from the token request for verification. If these values are validated, the
- * application issues an access token on behalf of the user who authorized the code.
  */
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
   db.users.findByUsername(username, password)
@@ -105,10 +85,6 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
 
 /**
  * Exchange the client id and password/secret for an access token.
- *
- * The callback accepts the `client`, which is exchanging the client's id and
- * password/secret from the token request for verification. If these values are validated, the
- * application issues an access token on behalf of the client who authorized the code.
  */
 server.exchange(oauth2orize.exchange.clientCredentials((client, scope, done) => {
   const token = utils.createToken({ sub: client.id, exp: config.token.expiresIn });
@@ -121,10 +97,6 @@ server.exchange(oauth2orize.exchange.clientCredentials((client, scope, done) => 
 
 /**
  * Exchange the refresh token for an access token.
- *
- * The callback accepts the `client`, which is exchanging the client's id from the token
- * request for verification.  If this value is validated, the application issues an access
- * token on behalf of the client who authorized the code
  */
 server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, done) => {
   db.refreshTokens.find(refreshToken)
