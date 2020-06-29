@@ -1,54 +1,15 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>OAuth2Orize Recipes Login</title>
-  <!-- Needed for mobile sites to work -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Style sheets -->
-  <link rel="stylesheet" type="text/css" href="stylesheets/pure-min.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/base.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/sign-in-modules.css">
-</head>
-
-<body>
-
-  <!-- HTML login screen form -->
-  <form action="/login" method="post" class="pure-form pure-form-stacked">
-    <fieldset>
-      <!-- Upper box with Title, username, and password -->
-      <div class="upper-box">
-        <!-- Title -->
-        <div>
-          <h1 class="title-padding">Login</h1>
-        </div>
-        <div class="pure-control-group">
-          <!-- Username label and input -->
-          <label class="labels" for="name">Número RA:</label>
-
-          <div class="input-fields">
-            <input class="pure-input-1 input-fields" id="name" type="text" name="username" />
-          </div>
-        </div>
-        <div class="pure-control-group">
-          <!-- Password label and input -->
-          <label class="labels" for="password">Password:</label>
-
-          <div class="input-fields">
-            <input class="pure-input-1 input-fields" id="password" type="password" name="password" />
-          </div>
-        </div>
-      </div>
-      <!-- Bottom box with Sign in -->
-      <div class="bottom-box">
-        <div class="pure-controls sign-in-button">
-          <button type="submit" value="Submit" class="pure-button pure-button-primary">Sign in</button>
-        </div>
-      </div>
-    </fieldset>
-  </form>
-
-</body>
-
-</html>
+<form action="/login" method="post">
+	<div>
+  	<label>Username:</label>
+  	<input type="text" name="username" /><br/>
+	</div>
+	<div>
+  	<label>Password:</label>
+  	<input type="password" name="password" />
+	</div>
+	<div>
+	  <input type="submit" value="Submit" />
+	</div>
+</form>
+<p><small>Hint - bob:secret</small></p>
+<p><small>Hint - joe:password</small></p>

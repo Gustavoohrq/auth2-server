@@ -1,100 +1,44 @@
 'use strict';
 
-const bodyParser = require('body-parser');
-const client = require('./client');
-const cookieParser = require('cookie-parser');
-const config = require('./config');
-const db = require('./db');
 const express = require('express');
-const expressSession = require('express-session');
-const fs = require('fs');
-const oauth2 = require('./oauth2');
-const passport = require('passport');
+const ejs = require('ejs');
 const path = require('path');
-const site = require('./site');
-const token = require('./token');
-const user = require('./user');
-const cors = require('cors')
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const errorHandler = require('errorhandler');
+const session = require('express-session');
+const passport = require('passport');
+const routes = require('./routes');
 
-const MemoryStore = expressSession.MemoryStore;
-
+// Express configuration
 const app = express();
+app.engine('ejs', ejs.__express);
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './views'));
 app.use(cookieParser());
-app.use(cors())
-
-const port = process.env.PORT || 8080
-
-
-// Session Configuration
-app.use(expressSession({
-  saveUninitialized: true,
-  resave: true,
-  secret: config.session.secret,
-  store: new MemoryStore(),
-  key: 'authorization.sid',
-  cookie: { maxAge: config.session.maxAge },
-}));
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(errorHandler());
+app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Passport configuration
 require('./auth');
 
-app.get('/', site.index);
-app.get('/login', site.loginForm);
-app.post('/login', site.login);
-app.get('/logout', site.logout);
-app.get('/account', site.account);
+app.get('/', routes.site.index);
+app.get('/login', routes.site.loginForm);
+app.post('/login', routes.site.login);
+app.get('/logout', routes.site.logout);
+app.get('/account', routes.site.account);
 
-app.get('/dialog/authorize', oauth2.authorization);
-app.post('/dialog/authorize/decision', oauth2.decision);
-app.post('/oauth/token', oauth2.token);
+app.get('/dialog/authorize', routes.oauth2.authorization);
+app.post('/dialog/authorize/decision', routes.oauth2.decision);
+app.post('/oauth/token', routes.oauth2.token);
 
-app.get('/api/userinfo', user.info);
-app.get('/api/clientinfo', client.info);
+app.get('/api/userinfo', routes.user.info);
+app.get('/api/clientinfo', routes.client.info);
 
+app.listen(process.env.PORT || 8080);
 
-app.get('/api/tokeninfo', token.info);
-
-app.get('/api/revoke', token.revoke);
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-app.use((err, req, res, next) => {
-  if (err) {
-    if (err.status == null) {
-      console.error('Internal unexpected error from:', err.stack);
-      res.status(500);
-      res.json(err);
-    } else {
-      res.status(err.status);
-      res.json(err);
-    }
-  } else {
-    next();
-  }
-});
-
-
-setInterval(() => {
-  db.accessTokens.removeExpired()
-    .catch(err => console.error('Error trying to remove expired tokens:', err.stack));
-}, config.db.timeToCheckExpiredTokens * 1000);
-
-// TODO: Change these for your own certificates.  This was generated through the commands:
-// openssl genrsa -out privatekey.pem 2048
-// openssl req -new -key privatekey.pem -out certrequest.csr
-// openssl x509 -req -in certrequest.csr -signkey privatekey.pem -out certificate.pem
-const options = {
-  key: fs.readFileSync(path.join(__dirname, 'certs/privatekey.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'certs/certificate.pem')),
-};
-
-app.listen(port, function () {
-  console.log(`Server running on the port ${port}`);
-});
+module.exports = app;

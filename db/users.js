@@ -13,14 +13,6 @@ module.exports.findById = async (id, done) => {
     })
 };
 
-
-/**
- * Returns a user if it finds one, otherwise returns null if a user is not found.
- * @param   {String}   username - The unique user name to find
- * @param   {Function} done     - The user if found, otherwise returns undefined
- * @returns {Promise} resolved user if found, otherwise resolves undefined
- */
-
 module.exports.findByUsername = async (username, password, done) => {
   const data = {
     'numero_ra': username,
@@ -35,4 +27,3 @@ module.exports.findByUsername = async (username, password, done) => {
       return done(new Error('User Not Found'))
     })
 };
-

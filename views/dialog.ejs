@@ -1,47 +1,10 @@
-<!DOCTYPE html>
-<html>
+<p>Olá, <%= user.nomeAluno %>!</p>
+<p>Você autoriza ter acesso ao seus dados?</p>
 
-<head>
-  <title>OAuth2Orize Recipes Decision</title>
-  <!-- Needed for mobile sites to work -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Style sheets -->
-  <link rel="stylesheet" type="text/css" href="../stylesheets/pure-min.css">
-  <link rel="stylesheet" type="text/css" href="../stylesheets/base.css">
-  <link rel="stylesheet" type="text/css" href="../stylesheets/dialog-modules.css">
-</head>
-<body>
-
-<form action="/dialog/authorize/decision" method="post" class="pure-form pure-form-stacked">
-  <input name="transaction_id" type="hidden" value="<%= transactionID %>">
-  <fieldset>
-    <!-- Upper box with Title, username, and password -->
-    <div class="upper-box">
-      <!-- Title -->
-      <div class="pure-control-group labels">
-        <p>
-
-        <p><%= user.nomeAluno %>,</p>
-        O aplicativo está solicitando acesso à sua conta.
-        </p>
-      </div>
-    </div>
-    <!-- Bottom box with Sign in -->
-    <div class="bottom-box">
-      <div class="pure-controls accept-cancel-buttons">
-        <div>
-          <input class="pure-button pure-button-primary" type="submit" value="Aceitar" id="allow">
-          <!-- Cheat to make a bit of spacing -->
-          <span>&nbsp&nbsp</span>
-          <input class="pure-button" type="submit" value="Recusar" name="cancel" id="deny">
-        </div>
-      </div>
-    </div>
-  </fieldset>
+<form action="/dialog/authorize/decision" method="post">
+  <input name="transaction_id" type="hidden" value="<%= transactionId %>" />
+  <div>
+    <input type="submit" value="Allow" id="allow" />
+    <input type="submit" value="Deny" name="cancel" id="deny" />
+  </div>
 </form>
-
-</body>
-</html>
-
-
