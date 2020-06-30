@@ -9,7 +9,7 @@ module.exports.removeByUserIdAndClientId = (userId, clientId, done) => {
   connection.query('SELECT * FROM access_token userId=?', userId, function (error, results, fields) {
     if (error) return done(new Error('User not found'))
     else if (results[0] === '' || results[0] === undefined || results[0] === null) return done(new Error('User not found'))
-    connection.query('DELETE FROM usuario access_token token = ?', [results[0].token], function (error, results, fields) {
+    connection.query('DELETE FROM access_token token = ?', [results[0].token], function (error, results, fields) {
       if (error) return done(new Error('Token Not Found'))
       return done(null);
     });
