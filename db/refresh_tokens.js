@@ -35,20 +35,19 @@ module.exports.findByUserIdAndClientId = (userId, clientId, done) => {
 module.exports.save = async (token, userId, clientId, done) => {
     const id = uuidv1();
     const created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM");
-    const sql = connection.query("INSERT INTO refresh_token SET ? ", {
-        id,
-        token,
-        created_at,
-        userId,
-        clientId
-    }, function (error, results, fields) { return done() })
-
+    
     connection.query('SELECT * FROM refresh_token where userId=?', userId, function (error, results, fields) {
-        const id_delete = results[0].id;
-        if (error) return done()
+        const sql = connection.query("INSERT INTO refresh_token SET ? ", {
+            id,
+            token,
+            created_at,
+            userId,
+            clientId
+        }, function (error, results, fields) { return done() })
+        if (error) return sql
         else if (results[0] === '' || results[0] === undefined || results[0] === null) return sql
         else {
-            connection.query('DELETE FROM refresh_token where id = ?', id_delete, function (erro, results, fields) {
+            connection.query('DELETE FROM refresh_token where id = ?', results[0].id, function (erro, results, fields) {
                 return sql;
             });
         }
