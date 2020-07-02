@@ -1,10 +1,31 @@
-<p>Olá, <%= user.nomeAluno %>!</p>
-<p>Você autoriza ter acesso ao seus dados?</p>
+<!DOCTYPE html>
+<html>
 
-<form action="/dialog/authorize/decision" method="post">
-  <input name="transaction_id" type="hidden" value="<%= transactionId %>" />
-  <div>
-    <input type="submit" value="Sim" id="allow" />
-    <input type="submit" value="Não" name="cancel" id="deny" />
-  </div>
-</form>
+<head>
+    <title>Alexa Auth</title>
+    <!-- Needed for mobile sites to work -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://www.lyceum.com.br/wp-content/uploads/2018/09/cropped-midias_azul_png-192x192.png" sizes="192x192" />
+    <!-- Style sheets -->
+    <link rel="stylesheet" type="text/css" href="../styles/dialog.css">
+
+</head>
+
+<body>
+    <div class="dialog-box">
+        <p>Olá,
+            <%= user.nomeAluno %>!</p>
+        <p>Você autoriza ter acesso ao seus dados?</p>
+
+        <form action="/dialog/authorize/decision" class="dialog-form" method="post">
+            <input name="transaction_id" type="hidden" value="<%= transactionId %>" />
+            <div>
+                <input type="submit" value="Sim" id="allow" />
+                <input type="submit" value="Não" name="cancel" id="deny" />
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

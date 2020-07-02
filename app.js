@@ -14,6 +14,7 @@ const routes = require('./routes');
 const app = express();
 app.engine('ejs', ejs.__express);
 app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, './public')));
 app.set('views', path.join(__dirname, './views'));
 app.use(cookieParser());
 app.use(bodyParser.json({ extended: false }));
