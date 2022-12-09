@@ -21,7 +21,7 @@
     "dateformat": "^3.0.3",
     "ejs": "^2.5.6",
     "errorhandler": "^1.5.0",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "express-session": "^1.15.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
